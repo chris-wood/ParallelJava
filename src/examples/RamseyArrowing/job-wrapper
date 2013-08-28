@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+n=${1}
+low=${2}
+high=${3}
+
+# limit the amount of memory we use
+ulimit -m 2000000 || /bin/true
+
+# touch the output file and run the program
+touch out_${2}_${3}
+java OSGArrowDecider ${1} ${2} ${3} > out_${2}_${3}
+
+
