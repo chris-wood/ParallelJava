@@ -1,0 +1,25 @@
+Task: 
+
+Computing the linear approximation table for a cryptographic S-box
+
+Sequential computational complexity: 
+
+O(2^4n)
+
+Delivered programs: 
+
+LinearTableSeq.java and LinearTableSmp.java, both of which compute the same linear approximation table sequentially and in parallel
+
+Description:
+
+Linear cryptanalysis is a common attack on block ciphers used to extract the secret key by exploiting linear combinations of input and output bits in the S-box (the substitution step in Substitution-Permutation Network (SPN) algorithm designs) that occur with relatively high or low probability. To find candidate linear combinations that can be used in this attack, one typically computes a linear approximation table of the S-box, which is simply a 2D matrix M whose entries correspond to the number of times a particular linear combination of input and output bits was satisfied by the S-box. More specifically, if one considers the indexes i and j into this matrix M as bit masks in the linear combination, then M[i][j] = #{(x,y) | y_b = S(x_a)}, where x_i and y_j are the bits of input x and output y masked by i and j, respectively. The pseudocode for computing the matrix M for a k-bit S-box (i.e. an S-box whose input and output elements are k bits wide) is shown below:
+
+M[][] <- zeros(2^k, 2^k)
+for i = 0 to 2^k - 1:
+	for j = 0 to 2^k - 1:
+		for x = 0 to 2^k - 1:
+			for y = 0 to 2^k - 1:
+				if (linear combination with (i, j, x, y) is satisfied):
+					M[i][j] = M[i][j] + 1
+
+Clearly, the computational complexity of this algorithm increases significantly with k, so we want to parallelize the computation to let it finish in a reasonable amount of time. This is the task you will complete. 
